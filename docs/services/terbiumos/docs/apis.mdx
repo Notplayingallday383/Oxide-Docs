@@ -1,0 +1,216 @@
+# <span style="color: #32ae62;">APIs</span>
+
+So you're looking to use Terbium APIs. Well, you're in the right place! The COM (Communication layer between NextJS (Backend) and standard JS (frontend components)) has a decent amount of components which I will break down below. The pages will include a description of the functions and code examples.
+
+## Launcher
+  - **addApp**
+    - Description: Adds an app to the app launcher.
+    - Parameters:
+      - `props: { name: string, icon: string, app_id: string, callback: any }`
+    - Example:
+      ```javascript
+      tb.launcher.addApp({
+        name: "Example App",
+        icon: "/home/icon.png",
+        app_id: "com.example.app",
+        callback: () => console.log("App Launched"),
+      });
+      ```
+
+  - **removeApp**
+    - Description: Removes an app from the app launcher.
+    - Parameters:
+      - `app_id: string` - The app id of the app to be removed.
+    - Returns: `boolean` - `true` if the app was removed, `false` if not found.
+    - Example:
+      ```js
+      const removed = tb.launcher.removeApp("com.example.app");
+      if (removed) {
+        console.log("App removed successfully");
+      } else {
+        console.log("App not found");
+      }
+      ```
+
+## Theme
+  - **get**
+    - Description: Gets the current theme settings.
+    - Returns: `Promise<object>` - Theme settings.
+    - Example:
+      ```javascript
+      const themeSettings = await tb.theme.get();
+      console.log("Current Theme Settings:", themeSettings);
+      ```
+
+  - **set**
+    - Description: Sets the theme settings.
+    - Parameters:
+      - `data: any` - New theme settings.
+    - Returns: `Promise<boolean>` - `true` if successful.
+    - Example:
+      ```javascript
+      await tb.theme.set({ color: "#ffffff", font: "Roboto" });
+      console.log("Theme set successfully");
+      ```
+
+## Desktop
+  - **preferences**
+    - **blur**
+      - Description: Applies or removes blur effect on the desktop.
+      - Parameters:
+        - `state: boolean` - `true` to enable blur, `false` to disable.
+      - Example:
+        ```javascript
+        tb.desktop.preferences.blur(true);
+        ```
+
+    - **isBlur**
+      - Description: Checks if blur effect is currently applied.
+      - Returns: `boolean` - `true` if blur is applied, `false` otherwise.
+      - Example:
+        ```javascript
+        const isBlurApplied = tb.desktop.preferences.isBlur();
+        console.log("Blur is applied:", isBlurApplied);
+        ```
+
+## Window
+  - **getId**
+    - Description: Gets the ID of the currently active window.
+    - Returns: `string` - Window ID.
+    - Example:
+      ```javascript
+      const windowId = tb.window.getId();
+      console.log("Current Window ID:", windowId);
+      ```
+
+## User
+  - **username**
+    - Description: Fetches the username of the current user.
+    - Returns: `Promise<string>` - User's username.
+    - Example:
+      ```javascript
+      const username = await tb.user.username();
+      console.log("username:", username);
+      ```
+  - **pfp**
+    - Description: Fetches the profile picture of the current user.
+    - Returns: `Promise<string>` - URL of the profile picture.
+    - Example:
+      ```javascript
+      const pfp = await tb.user.pfp();
+      console.log("PFP:", pfp);
+      ```
+
+## Proxy
+  - **get**
+    - Description: Gets the current proxy settings.
+    - Returns: `any` - Proxy settings.
+    - Example:
+      ```javascript
+      const proxySettings = tb.proxy.get();
+      console.log("Using:", proxySettings);
+      ```
+  - **set**
+    - Description: Selects the proxy.
+    - Parameters:
+      - `proxy: string` - New proxy settings.
+    - Returns: `Promise<boolean>` - `true` if successful.
+    - Example:
+      ```javascript
+      await tb.proxy.set("UltraViolet");
+      console.log("Proxy set successfully");
+      ```
+
+## Notification
+  - **Message**
+    - Description: The notification that has a input feild.
+    - Parameters:
+      - `message, application, iconSrc, onOk (async), txt`
+    - Example:
+    ```javascript
+    tb.notification.Message({ message: "test", application: "System", iconSrc: "/assets/img/logo.png", txt: "fieldtext" })
+    ```
+  - **Toast**
+    - Description: A simple notification
+    - Parameters:
+      - `message, application, iconSrc, time`
+    - Example:
+    ```javascript
+    tb.notification.Message({ message: "test", application: "System", iconSrc: "/assets/img/logo.png", time: "10000" })
+    ```
+
+## Dialog
+  - **openDialog**
+    - Description: The file Selection dialog
+    - Parameters:
+      - `props: any` - Properties of the dialog.
+    - Returns: `Promise<void>` - Resolves when the dialog is closed.
+    - Example:
+      ```javascript
+      await tb.dialog.openDialog({ title: "Example Dialog", content: "Hello, World!" });
+      ```
+
+  - **Alert**
+    - Description: The Alert dialog
+    - Parameters:
+      - `props: { title: string, message: string }` - Alert properties.
+    - Example:
+      ```javascript
+      tb.dialog.Alert({ title: "Alert", message: "This is an alert message." });
+      ```
+
+  - **Message**
+    - Description: Displays a message dialog with specified properties.
+    - Parameters:
+      - `props: { title: string, defaultValue: string, onOk?: Function, onCancel?: Function }` - Message dialog properties.
+    - Returns: `Promise<void>` - Resolves when the message dialog is closed.
+    - Example:
+      ```javascript
+      await tb.dialog.Message({
+        title: "Example Message",
+        defaultValue: "Default value",
+        onOk: (value) => console.log("OK clicked with value:", value),
+        onCancel: () => console.log("Cancel clicked"),
+      });
+      ```
+
+## System
+  - **version**
+    - Description: Lists the version of Terbium
+    - Returns: `string` - Terbium version.
+    - Example:
+      ```javascript
+      const terbiumVersion = tb.system.version();
+      console.log("Terbium v:", terbiumVersion);
+      ```
+
+  - **openApp**
+    - Description: Opens a Installed Application
+    - Parameters:
+      - `pkg: string` - Package ID of the app.
+      - `options: { rest?: string }` - Additional options for the app.
+    - Example:
+      ```javascript
+      await tb.system.openApp("com.tb.app", { rest: "args" });
+      ```
+
+  - **init**
+    - Description: Initiates Core Components
+    - Example:
+      ```javascript
+      tb.system.init();
+      ```
+
+## File
+  - **handler**
+    - **openFile**
+      - Description: Opens a file with the associated app based on file type.
+      - Parameters:
+        - `path: string` - Path of the file.
+        - `type: string` - Type of the file.
+      - Example:
+        ```javascript
+        tb.file.handler.openFile("/home/example.txt", "text");
+        ```
+
+Have fun developing for Terbium!

@@ -1,0 +1,31 @@
+---
+title: Terbium Docs
+---
+
+# <span style="color: #32ae62;">Getting Started with Terbium v2 Development</span>
+Table of Contents
+- [Understanding the File Structure](#understanding-the-file-structure)
+- [Learning What should and shouldn't be touched](#learning-what-should-and-shouldnt-be-touched)
+  
+## <a name="understanding-the-file-structure" style="color: #32ae62;">Understanding the File Structure</a>
+Terbium v2 for the most part is written in [NextJS](https://nextjs.org) with typescript. If you haven't already make sure you have all the dependencies installed which can be done via `pnpm i`.
+
+Terbium has 5 Folders that you should pay attention to and that are referenced throughout Terbium's Code.
+- <span style="color: #32ae62;">app</span>: The location of the OS' backend code. Such as the `login`, `os page`, `boot menu,` etc.
+  
+- <span style="color: #32ae62;">components</span>: Where generic components are stored for the backend. Some of these may include the `app launcher`, `dropdown menus`, `shell`, etc. These are referenced as `@components/` in the code.
+  
+- <span style="color: #32ae62;">public</span>: The static folder for normal html, js, css components such as Default Applications, Libraries, and Anura Applications & Service Workers
+
+- <span style="color: #32ae62;">System_Modules</span>: The location of System Files for the OS such as, Liquor Compatibility Files (Anura Compat Layer), The OS communicator for JS, the WM, etc. These files are very important to TB and are referenced throughout the code as @system_modules/
+  > <span style="color: #ffd900;"><span style="font-family: none;">⚠</span> NOTE:</span> Anura Files are referenced using @system_modules/ too and not @anura or anything like that.
+
+## <a name="learning-what-should-and-shouldnt-be-touched" style="color: #32ae62;">Learning What should and shouldn't be touched</a>
+
+For the most part this is self explanatory. Unless you absolutely know what your doing **DO NOT** mess with anything in the `system_modules` folder or any typescript configuration files as they are system critical and will break things if you modify them without knowing what you're doing. If you do however know what you're doing and wish to expand upon the current functionality feel free to poke around in the `system_modules`.
+
+Modifying apps in the `public` folder is fine and shouldn't break anything since it is not system dependent. If you wish to add Terminal Commands refer to [Creating Terminal Commands](./creating-terminal-commands.md)
+
+The `app` folder can be modified to include new functionality as you wish but make sure you do know what your doing.
+
+Lastly, The `components` folder can safely be modified to include new apps, functionality, etc
